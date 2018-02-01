@@ -1,0 +1,38 @@
+{
+  "name": "image-matcher",
+  "version": "0.1.0",
+  "description": "image matcher utility with Jasmine",
+  "main": "dist/imagematcher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ota-meshi/image-matcher.git"
+  },
+  "keywords": [
+    "image",
+    "test",
+    "util"
+  ],
+  "author": "ota",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ota-meshi/image-matcher/issues"
+  },
+  "files": [
+    "src/js/",
+    "dist/"
+  ],
+  "homepage": "https://github.com/ota-meshi/image-matcher#readme",
+  "devDependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^4.16.0",
+    "eslint-plugin-html": "^4.0.2",
+    "webpack": "^3.10.0",
+    "webpack-livereload-plugin": "^1.0.0"
+  }
+}
