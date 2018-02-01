@@ -98,9 +98,5 @@ function toImageMatch(actual, expected, {
 }
 
 module.exports = {
-	toImageMatch() {
-		return {
-			compare: toImageMatch
-		};
-	}
+	toImageMatch,
 };
