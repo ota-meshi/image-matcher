@@ -9,6 +9,23 @@ const TYPE_IMAGE_DATA = /\[object ImageData\]/i;
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
 
+function getCanvasSize(canvas) {
+	try {
+		const HTMLCanvasElement = self.Canvas || self.HTMLCanvasElement;
+
+		return {
+			width: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'width') - 0,
+			height: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'height') - 0,
+		};
+	} catch (e) {
+		// noop
+	}
+	return {
+		width: canvas.width,
+		height: canvas.height
+	};
+}
+
 function isImage(object) {
 	return isType(object, TYPE_IMAGE);
 }
@@ -46,7 +63,7 @@ function toImageDataFromImage(image) {
 	return context.getImageData(0, 0, width, height);
 }
 function toImageDataFromCanvas(canvas) {
-	const {height, width} = canvas;
+	const {height, width} = getCanvasSize(canvas);
 	const context = canvas.getContext('2d');
 	return context.getImageData(0, 0, width, height);
 }
@@ -150,11 +167,14 @@ function diffImageData(a, b) {
  */
 function blur(object, blurLevel) {
 	if (!blurLevel) {
-		return object;
+		return toImageData(object);
 	}
 	const px = new Pixels(object);
 	const {height, width} = px;
 	const blur = new Pixels(createImageData(width, height));
+
+	const floorLevel = Math.floor(blurLevel);
+	const ceilLevel = Math.ceil(blurLevel);
 	
 	for (let y = 0; y < height; y++) {
 		for (let x = 0; x < width; x++) {
@@ -165,15 +185,31 @@ function blur(object, blurLevel) {
 			let a = 0;
 			let count = 0;
 
-			for (let offsetY = -blurLevel; offsetY <= blurLevel; offsetY++) {
-				for (let offsetX = -blurLevel; offsetX <= blurLevel; offsetX++) {
+			for (let offsetY = -floorLevel; offsetY <= floorLevel; offsetY++) {
+				for (let offsetX = -floorLevel; offsetX <= floorLevel; offsetX++) {
 					const buf = px.get(x + offsetX, y + offsetY);
-					++count;
+					count++;
 					r += buf[0];
 					g += buf[1];
 					b += buf[2];
 					a += buf[3];
 				}
+			}
+
+			if (floorLevel < ceilLevel) {
+				const point = blurLevel - floorLevel;
+				[-ceilLevel, ceilLevel].forEach((offsetY) => {
+					[-ceilLevel, ceilLevel].forEach((offsetX) => {
+						const buf = px.get(x + offsetX, y + offsetY);
+						count += point;
+						r += buf[0];
+						g += buf[1];
+						b += buf[2];
+						a += buf[3];
+					});
+
+				});
+
 			}
 
 			blur.put(x, y, [
@@ -208,6 +244,16 @@ function toColorDistanceBox(object) {
 	return result;
 }
 
+function fitImageData(object, width, height) {
+	const data = toCanvas(object);
+	canvas.width = width;
+	canvas.height = height;
+	const context = canvas.getContext('2d');
+	context.drawImage(data, 0, 0, data.width, data.height, 0, 0, width, height);
+	return toImageData(canvas);
+
+}
+
 function toDataURL(object) {
 	const canvas = toCanvas(object);
 	const base64 = canvas.toDataURL('image/png');
@@ -226,9 +272,10 @@ module.exports = {
 	toDataURL,
 
 	// process
-	diffImageData,
+	diff: diffImageData,
 	blur,
 	toColorDistanceBox,
+	fit: fitImageData,
 
 
 	// classes

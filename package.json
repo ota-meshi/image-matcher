@@ -5,8 +5,10 @@
   "main": "dist/imagematcher.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "watch": "webpack --watch"
+    "build": "npm run format && webpack",
+    "watch": "webpack --watch",
+    "lint": "eslint src/js",
+    "format": "eslint src --fix"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   ],
   "homepage": "https://github.com/ota-meshi/image-matcher#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.16.0",

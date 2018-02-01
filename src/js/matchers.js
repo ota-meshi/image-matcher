@@ -12,14 +12,20 @@ function toImageMatch(actual, expected, {
 	tolerance = 0, // accepts tolerance in pixels
 	delta = 0, // the maximum delta between
 	blurLevel = 0, // blur test lebel
+	fitSize = true,
 	textMessage = false
 } = {}) {
 	if (typeof delta === 'string' && /^[+-]?\d+\.?\d*%$/.test(delta)) {
 		delta = delta.substr(0, delta.length - 1) / 100;
 	}
 	const blurActual = util.blur(actual, blurLevel);
-	const blurExpected = util.blur(expected, blurLevel);
-	const diffPx = new util.Pixels(util.diffImageData(blurActual, blurExpected));
+	let blurExpected;
+	if (fitSize) {
+		blurExpected = util.blur(util.fit(expected, blurActual.width, blurActual.height), blurLevel);
+	} else {
+		blurExpected = util.blur(expected, blurLevel);
+	}
+	const diffPx = new util.Pixels(util.diff(blurActual, blurExpected));
 	const {height, width} = diffPx;
 
 	const colorDistanceBox = util.toColorDistanceBox(diffPx);

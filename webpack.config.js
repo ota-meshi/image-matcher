@@ -44,7 +44,7 @@ module.exports = [{
 		]
 	},
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
+		// new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
 		new webpack.optimize.AggressiveMergingPlugin(),
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),

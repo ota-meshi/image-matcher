@@ -11,7 +11,6 @@
 	}
 
 	const GridCanvasHelper = cheetahGrid.GridCanvasHelper;
-	const _ = cheetahGrid._internal.symbolManager.PROTECTED_SYMBOL;
 
 	const grid = new cheetahGrid.core.DrawGrid({
 		parentElement: (function() {
@@ -97,11 +96,11 @@
 		}
 		const canvas = createAnswerCanvas();
 
-		it('expect(grid.canvas).toImageMatch(canvas, {delta: \'15%\', blurLevel: 1})', function() {
-			expect(grid.canvas).toImageMatch(canvas, {delta: '15%', blurLevel: 1});
+		it('expect(grid.canvas).toImageMatch(canvas, {delta: \'20%\', blurLevel: 1})', function() {
+			expect(grid.canvas).toImageMatch(canvas, {delta: '20%', blurLevel: window.devicePixelRatio});
 		});
 		it('expect(grid.canvas).toImageMatch(canvas, {delta: 0, blurLevel: 1})', function() {
-			expect(grid.canvas).toImageMatch(canvas, {delta: 0, blurLevel: 1});
+			expect(grid.canvas).toImageMatch(canvas, {delta: 0, blurLevel: window.devicePixelRatio});
 		});
 		it('expect(grid.canvas).toImageMatch(canvas)', function() {
 			expect(grid.canvas).toImageMatch(canvas);
