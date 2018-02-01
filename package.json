@@ -8,7 +8,8 @@
     "build": "npm run format && webpack",
     "watch": "webpack --watch",
     "lint": "eslint src/js",
-    "format": "eslint src --fix"
+    "format": "eslint src --fix",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
