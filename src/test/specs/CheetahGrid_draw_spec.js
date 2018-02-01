@@ -97,8 +97,8 @@
 		}
 		const canvas = createAnswerCanvas();
 
-		it('expect(grid.canvas).toImageMatch(canvas, {delta: 15, blurLevel: 1})', function() {
-			expect(grid.canvas).toImageMatch(canvas, {delta: 15, blurLevel: 1});
+		it('expect(grid.canvas).toImageMatch(canvas, {delta: \'15%\', blurLevel: 1})', function() {
+			expect(grid.canvas).toImageMatch(canvas, {delta: '15%', blurLevel: 1});
 		});
 		it('expect(grid.canvas).toImageMatch(canvas, {delta: 0, blurLevel: 1})', function() {
 			expect(grid.canvas).toImageMatch(canvas, {delta: 0, blurLevel: 1});

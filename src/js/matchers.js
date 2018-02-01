@@ -14,7 +14,9 @@ function toImageMatch(actual, expected, {
 	blurLevel = 0, // blur test lebel
 	textMessage = false
 } = {}) {
-
+	if (typeof delta === 'string' && /^[+-]?\d+\.?\d*%$/.test(delta)) {
+		delta = delta.substr(0, delta.length - 1) / 100;
+	}
 	const blurActual = util.blur(actual, blurLevel);
 	const blurExpected = util.blur(expected, blurLevel);
 	const diffPx = new util.Pixels(util.diffImageData(blurActual, blurExpected));
@@ -32,13 +34,13 @@ function toImageMatch(actual, expected, {
 			maxColorDistance = Math.max(maxColorDistance, colorDistance);
 			if (colorDistance > delta) {
 				unmatchCount++;
-				if (colorDistance < 20) {
+				if (colorDistance < 0.20) {
 					colorDistanceResultPx.put(x, y, [225, 225, 225]);
-				} else if (colorDistance < 40) {
+				} else if (colorDistance < 0.40) {
 					colorDistanceResultPx.put(x, y, [0, 0, 225]);
-				} else if (colorDistance < 60) {
+				} else if (colorDistance < 0.60) {
 					colorDistanceResultPx.put(x, y, [0, 225, 0]);
-				} else if (colorDistance < 80) {
+				} else if (colorDistance < 0.80) {
 					colorDistanceResultPx.put(x, y, [225, 225, 0]);
 				} else {
 					colorDistanceResultPx.put(x, y, [225, 0, 0]);

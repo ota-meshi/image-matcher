@@ -201,7 +201,7 @@ function toColorDistanceBox(object) {
 								Math.pow(data[1], 2) +
 								Math.pow(data[2], 2)// +
 								// Math.pow(255 - data[3], 2)
-			) * 100 / 441.6729559300637;
+			) / 441.6729559300637;
 			result[y][x] = colorDistance;
 		}
 	}
