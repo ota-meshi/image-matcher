@@ -105,6 +105,27 @@
 		it('expect(grid.canvas).toImageMatch(canvas)', function() {
 			expect(grid.canvas).toImageMatch(canvas);
 		});
+		it('test', function() {
+
+			const act = document.createElement('canvas');
+			act.width = 100;
+			act.height = 100;
+			let ctx = act.getContext('2d');
+			const grad = ctx.createLinearGradient(0, 0, 0, 100);
+			grad.addColorStop(0, '#000');
+			grad.addColorStop(1, '#FFF');
+			ctx.fillStyle = grad;
+			ctx.rect(0, 0, 100, 100);
+			ctx.fill();
+			const exp = document.createElement('canvas');
+			exp.width = 100;
+			exp.height = 100;
+			ctx = exp.getContext('2d');
+			ctx.fillStyle = '#FFF';
+			ctx.rect(0, 0, 100, 100);
+			ctx.fill();
+			expect(act).toImageMatch(exp);
+		});
 
 	});
 

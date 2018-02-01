@@ -41,15 +41,20 @@ function toImageMatch(actual, expected, {
 			if (colorDistance > delta) {
 				unmatchCount++;
 				if (colorDistance < 0.20) {
-					colorDistanceResultPx.put(x, y, [225, 225, 225]);
+					const m = colorDistance / 0.20;
+					colorDistanceResultPx.put(x, y, [255 - 255 * m, 255 - 255 * m, 255]);
 				} else if (colorDistance < 0.40) {
-					colorDistanceResultPx.put(x, y, [0, 0, 225]);
+					const m = (colorDistance - 0.20) / 0.20;
+					colorDistanceResultPx.put(x, y, [0, 255 * m, 255 - 255 * m]);
 				} else if (colorDistance < 0.60) {
-					colorDistanceResultPx.put(x, y, [0, 225, 0]);
+					const m = (colorDistance - 0.40) / 0.20;
+					colorDistanceResultPx.put(x, y, [255 * m, 255, 0]);
 				} else if (colorDistance < 0.80) {
-					colorDistanceResultPx.put(x, y, [225, 225, 0]);
+					const m = (colorDistance - 0.60) / 0.20;
+					colorDistanceResultPx.put(x, y, [255, 255 - 255 * m, 0]);
 				} else {
-					colorDistanceResultPx.put(x, y, [225, 0, 0]);
+					const m = (colorDistance - 0.80) / 0.20;
+					colorDistanceResultPx.put(x, y, [255, 0, 255 * m]);
 				}
 			} else {
 				colorDistanceResultPx.put(x, y, [0, 0, 0]);
