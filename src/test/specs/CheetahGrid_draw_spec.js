@@ -111,17 +111,29 @@
 			act.width = 100;
 			act.height = 100;
 			let ctx = act.getContext('2d');
-			const grad = ctx.createLinearGradient(0, 0, 0, 100);
+			let grad = ctx.createLinearGradient(0, 0, 0, 100);
 			grad.addColorStop(0, '#000');
 			grad.addColorStop(1, '#FFF');
 			ctx.fillStyle = grad;
-			ctx.rect(0, 0, 100, 100);
+			ctx.beginPath();
+			ctx.rect(0, 0, 50, 100);
 			ctx.fill();
+
+			grad = ctx.createLinearGradient(0, 0, 0, 100);
+			grad.addColorStop(0, '#0FF');
+			grad.addColorStop(1, '#FFF');
+			ctx.fillStyle = grad;
+			ctx.beginPath();
+			ctx.rect(50, 0, 50, 100);
+			ctx.fill();
+
+
 			const exp = document.createElement('canvas');
 			exp.width = 100;
 			exp.height = 100;
 			ctx = exp.getContext('2d');
 			ctx.fillStyle = '#FFF';
+			ctx.beginPath();
 			ctx.rect(0, 0, 100, 100);
 			ctx.fill();
 			expect(act).toImageMatch(exp);

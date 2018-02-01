@@ -66,31 +66,31 @@ function toImageMatch(actual, expected, {
 		message() {
 			const msg = `unmatch pixels: ${unmatchCount}, max diffpoint: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}`;
 
-			const result = `
-				<div style="white-space: normal;">
-					<div style="display: inline-block;">
-						Actual:<br>
-						<img src="${util.toDataURL(actual)}">
-					</div>
-					<div style="display: inline-block;">
-						Expected:<br>
-						<img src="${util.toDataURL(expected)}">
-					</div>
-					${blurLevel > 0 ? `<div style="display: inline-block;">Actual blur:<br><img src="${util.toDataURL(blurActual)}"></div>` : ''}
-					${blurLevel > 0 ? `<div style="display: inline-block;">Expected blur:<br><img src="${util.toDataURL(blurExpected)}"></div>` : ''}
-					<div style="display: inline-block;">
-						Diff:<br>
-						<img src="${util.toDataURL(diffPx)}">
-					</div>
-					<div style="display: inline-block;">
-						Color Distance:<br>
-						<img src="${util.toDataURL(colorDistanceResultPx)}">
-					</div>
-					<div>${msg}</div>
-				</div>`;
 			if (textMessage) {
-				return result;
+				return msg;
 			} else {
+				const result = `
+<div style="white-space: normal;">
+	<div style="display: inline-block;">
+		Actual:<br>
+		<img src="${util.toDataURL(actual)}">
+	</div>
+	<div style="display: inline-block;">
+		Expected:<br>
+		<img src="${util.toDataURL(expected)}">
+	</div>
+	${blurLevel > 0 ? `<div style="display: inline-block;">Actual blur:<br><img src="${util.toDataURL(blurActual)}"></div>` : ''}
+	${blurLevel > 0 ? `<div style="display: inline-block;">Expected blur:<br><img src="${util.toDataURL(blurExpected)}"></div>` : ''}
+	<div style="display: inline-block;">
+		Diff:<br>
+		<img src="${util.toDataURL(diffPx)}">
+	</div>
+	<div style="display: inline-block;">
+		Color Distance:<br>
+		<img src="${util.toDataURL(colorDistanceResultPx)}">
+	</div>
+	<div>${msg}</div>
+</div>`;
 				return toElement(result);
 			}
 		}
