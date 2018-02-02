@@ -20,3 +20,12 @@ toImageMatch(expected, {
 	blurLevel = 0, // blur test lebel
 } = {})
 ```
+
+# examples 
+
+* [jasmine-example](https://ota-meshi.github.io/image-matcher/examples/jasmine-example.html)  
+* [mocha-example](https://ota-meshi.github.io/image-matcher/examples/mocha-example.html)  
+
+
+# Supported
+jasmine >= 2.0.4
