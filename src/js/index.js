@@ -18,9 +18,10 @@ if (window.jasmine) {
 	});
 }
 if (window.mocha && window.expect) {
-	expect.Assertion.prototype.imageMatch = function(obj, opt) {
-		const {textMessage = true} = opt;
-		opt.textMessage = textMessage;
+	expect.Assertion.prototype.imageMatch = function(obj, opt = {}) {
+		if (typeof opt.textMessage === 'undefined') {
+			opt.textMessage = true;
+		}
 		const res = matchers.toImageMatch(this.obj, obj, opt);
 		this.assert(
 				res.pass

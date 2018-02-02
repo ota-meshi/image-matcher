@@ -97,15 +97,15 @@
 		const canvas = createAnswerCanvas();
 
 		it('expect(grid.canvas).to.imageMatch(canvas, {delta: \'20%\', blurLevel: 1})', function() {
-			expect(grid.canvas).to.imageMatch(canvas, {delta: '20%', blurLevel: window.devicePixelRatio});
+			expect(grid.canvas).to.imageMatch(canvas, {delta: '20%', blurLevel: 1});
 		});
 		it('expect(grid.canvas).to.imageMatch(canvas, {delta: 0, blurLevel: 1})', function() {
-			expect(grid.canvas).to.imageMatch(canvas, {delta: 0, blurLevel: window.devicePixelRatio});
+			expect(grid.canvas).to.imageMatch(canvas, {delta: 0, blurLevel: 1});
 		});
 		it('expect(grid.canvas).to.imageMatch(canvas)', function() {
 			expect(grid.canvas).to.imageMatch(canvas);
 		});
-		it('test', function() {
+		it('test Color Distance', function() {
 
 			const act = document.createElement('canvas');
 			act.width = 100;

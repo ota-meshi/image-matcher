@@ -18,11 +18,28 @@ function toImageMatch(actual, expected, {
 	if (typeof delta === 'string' && /^[+-]?\d+\.?\d*%$/.test(delta)) {
 		delta = delta.substr(0, delta.length - 1) / 100;
 	}
-	const blurActual = util.blur(actual, blurLevel);
+	let blurActual;
 	let blurExpected;
 	if (fitSize) {
-		blurExpected = util.blur(util.fit(expected, blurActual.width, blurActual.height), blurLevel);
+		const aSize = util.getSize(expected);
+		const eSize = util.getSize(actual);
+		if (eSize.width !== aSize.width || eSize.height !== aSize.height) {
+			const width = Math.min(aSize.width, eSize.width);
+			const height = Math.min(aSize.height, eSize.height);
+			blurActual = util.blur(
+					util.fit(actual, width, height),
+					blurLevel
+			);
+			blurExpected = util.blur(
+					util.fit(expected, width, height),
+					blurLevel
+			);
+		} else {
+			blurActual = util.blur(actual, blurLevel);
+			blurExpected = util.blur(expected, blurLevel);
+		}
 	} else {
+		blurActual = util.blur(actual, blurLevel);
 		blurExpected = util.blur(expected, blurLevel);
 	}
 	const diffPx = new util.Pixels(util.diff(blurActual, blurExpected));

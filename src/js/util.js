@@ -6,24 +6,51 @@ const TYPE_CONTEXT = /\[object CanvasRenderingContext2D\]/i;
 const TYPE_IMAGE = /\[object (Image|HTMLImageElement)\]/i;
 const TYPE_IMAGE_DATA = /\[object ImageData\]/i;
 
-const canvas = document.createElement('canvas');
-const context = canvas.getContext('2d');
+function createCanvasSet() {
+	const canvas = document.createElement('canvas');
+	const context = canvas.getContext('2d');
+	return {canvas, context};
+}
 
-function getCanvasSize(canvas) {
-	try {
-		const HTMLCanvasElement = self.Canvas || self.HTMLCanvasElement;
+const SINGLETON = createCanvasSet();
 
-		return {
-			width: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'width') - 0,
-			height: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'height') - 0,
-		};
-	} catch (e) {
-		// noop
+
+function getSize(object) {
+	function getCanvasSize(canvas) {
+		try {
+			const HTMLCanvasElement = self.HTMLCanvasElement || self.Canvas;
+			return {
+				width: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'width') - 0,
+				height: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'height') - 0,
+			};
+		} catch (e) {
+			//noop
+		}
+		try {
+			return {
+				width: canvas.getAttribute('width') - 0,
+				height: canvas.getAttribute('height') - 0,
+			};
+		} catch (e) {
+			//noop
+		}
+		const {width, height} = object;
+		return {width, height};
 	}
-	return {
-		width: canvas.width,
-		height: canvas.height
-	};
+	if (isCanvas(object)) {
+		return getCanvasSize(object);
+	} else if (isContext(object)) {
+		return getCanvasSize(object.canvas);
+	}
+	const {width, height} = object;
+	return {width, height};
+}
+function getImageData(context, ...args) {
+	try {
+		return CanvasRenderingContext2D.prototype.getImageData.apply(context, args);
+	} catch (e) {
+		return context.getImageData(...args);
+	}
 }
 
 function isImage(object) {
@@ -55,22 +82,24 @@ function toImageData(object) {
 	return undefined;
 }
 function toImageDataFromImage(image) {
-	const {height, width} = image;
+	const {height, width} = getSize(image);
+	const {canvas, context} = SINGLETON;
 	canvas.width = width;
 	canvas.height = height;
 	context.clearRect(0, 0, width, height);
 	context.drawImage(image, 0, 0);
-	return context.getImageData(0, 0, width, height);
+	return getImageData(context, 0, 0, width, height);
 }
 function toImageDataFromCanvas(canvas) {
-	const {height, width} = getCanvasSize(canvas);
+	const {height, width} = getSize(canvas);
 	const context = canvas.getContext('2d');
-	return context.getImageData(0, 0, width, height);
+	return getImageData(context, 0, 0, width, height);
 }
 function toImageDataFromContext(context) {
 	return toImageDataFromCanvas(context.canvas);
 }
 function createImageData(width, height) {
+	const {canvas, context} = SINGLETON;
 	canvas.width = width;
 	canvas.height = height;
 	context.clearRect(0, 0, width, height);
@@ -79,10 +108,9 @@ function createImageData(width, height) {
 
 function toCanvas(object) {
 	const data = toImageData(object);
-	const canvas = document.createElement('canvas');
+	const {canvas, context} = createCanvasSet();
 	canvas.width = data.width;
 	canvas.height = data.height;
-	const context = canvas.getContext('2d');
 	context.putImageData(data, 0, 0);
 	return canvas;
 }
@@ -232,11 +260,11 @@ function toColorDistanceBox(object) {
 		result[y] = [];
 		for (let x = 0; x < width; x++) {
 			const data = px.get(x, y);
+			const r = data[3] / 255;
 			const colorDistance = Math.sqrt(
-					Math.pow(data[0], 2) +
-								Math.pow(data[1], 2) +
-								Math.pow(data[2], 2)// +
-								// Math.pow(255 - data[3], 2)
+					Math.pow(data[0] * r, 2) +
+					Math.pow(data[1] * r, 2) +
+					Math.pow(data[2] * r, 2)
 			) / 441.6729559300637;
 			result[y][x] = colorDistance;
 		}
@@ -246,12 +274,11 @@ function toColorDistanceBox(object) {
 
 function fitImageData(object, width, height) {
 	const data = toCanvas(object);
+	const {canvas, context} = SINGLETON;
 	canvas.width = width;
 	canvas.height = height;
-	const context = canvas.getContext('2d');
 	context.drawImage(data, 0, 0, data.width, data.height, 0, 0, width, height);
 	return toImageData(canvas);
-
 }
 
 function toDataURL(object) {
@@ -270,6 +297,7 @@ module.exports = {
 	toImageData,
 	toCanvas,
 	toDataURL,
+	getSize,
 
 	// process
 	diff: diffImageData,
