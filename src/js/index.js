@@ -35,4 +35,5 @@ if (window.mocha && window.expect) {
 
 module.exports = {
 	util,
+	matchers,
 };

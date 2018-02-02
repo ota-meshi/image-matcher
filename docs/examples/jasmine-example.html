@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>image-matcher jasmine example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine-html.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/boot.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="https://unpkg.com/image-matcher"></script>
+    <script src="../../dist/image-matcher.js"></script>
+    <style type="text/css">
+        .block {
+            display: inline-block;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="block">
+        target:<br>
+        <canvas id="target" width="100" height="100"></canvas>
+    </div>
+    <div class="block">
+        answer:<br>
+        <canvas id="answer" width="100" height="100"></canvas>
+    </div>
+    <br>source code:<br><button onclick="document.getElementById('code').classList.toggle('hidden')">show</button>
+    <pre><code id="code" class="js hidden">
+    </code></pre>
+    
+	<script type="text/javascript" src="./jasmine-example.js"></script>
+    <script>
+        const code = document.getElementById('code');
+        code.textContent = window.testCode;
+        hljs.highlightBlock(code);
+    </script>
+</body>
+</html>

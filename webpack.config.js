@@ -17,12 +17,12 @@ const devtoolModuleFilenameTemplate = ({resourcePath}) => {
 module.exports = [{
 	context: path.resolve(__dirname, 'src/js/'),
 	entry: {
-		imagematcher: './index.js'
+		'image-matcher': './index.js'
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist/'),
-		filename: 'imagematcher.js',
-		library: '[name]',
+		filename: '[name].js',
+		library: 'imagematcher',
 		libraryTarget: 'umd',
 		devtoolModuleFilenameTemplate,
 		devtoolFallbackModuleFilenameTemplate: devtoolModuleFilenameTemplate,
