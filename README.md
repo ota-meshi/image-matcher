@@ -21,6 +21,12 @@ toImageMatch(expected, {
 } = {})
 ```
 
+# html
+
+```html
+<script src="https://unpkg.com/image-matcher@0.1"></script>
+```
+
 # examples 
 
 * [jasmine-example](https://ota-meshi.github.io/image-matcher/examples/jasmine-example.html)  
