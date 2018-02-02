@@ -6,6 +6,14 @@ const PACKAGEJSON = require('./package.json');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const BANNER = `/*! image matcher v${PACKAGEJSON.version} | license ${PACKAGEJSON.license} */`;
 
+let watchMode = false;
+for (let i = 0; i < process.argv.length; i++) {
+	if (process.argv[i] === '--watch') {
+		watchMode = true;
+		break;
+	}
+}
+
 rm.sync(path.join(path.resolve(__dirname, 'dist/'), '*'));
 
 const devtoolModuleFilenameTemplate = ({resourcePath}) => {
@@ -53,10 +61,13 @@ module.exports = [{
 		]
 	},
 	plugins: [
-		// new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
-		new webpack.optimize.AggressiveMergingPlugin(),
-		new webpack.optimize.ModuleConcatenationPlugin(),
-		new webpack.optimize.OccurrenceOrderPlugin(),
+		...(watchMode ? [] : [
+			new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
+			new webpack.optimize.AggressiveMergingPlugin(),
+			new webpack.optimize.ModuleConcatenationPlugin(),
+			new webpack.optimize.OccurrenceOrderPlugin(),
+		]),
+		
 		new webpack.BannerPlugin({banner: BANNER, raw: true, entryOnly: true}),
 		new LiveReloadPlugin(),
 	],
