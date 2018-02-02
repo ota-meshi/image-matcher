@@ -2,18 +2,11 @@
 
 const util = require('./util');
 
-function toElement(html) {
-	const e = document.createElement('div');
-	e.innerHTML = html;
-	return e;
-}
-
-function toImageMatch(actual, expected, {
+function toMatchImage(actual, expected, {
 	tolerance = 0, // accepts tolerance in pixels
-	delta = 0, // the maximum delta between color distance
+	delta = 0, // the maximum color distance between actual and expected
 	blurLevel = 0, // blur test level
 	fitSize = true,
-	textMessage = false
 } = {}) {
 	if (typeof delta === 'string' && /^[+-]?\d+\.?\d*%$/.test(delta)) {
 		delta = delta.substr(0, delta.length - 1) / 100;
@@ -80,40 +73,17 @@ function toImageMatch(actual, expected, {
 	}
 	return {
 		pass: unmatchCount <= tolerance,
-		message() {
-			const msg = `unmatch pixels: ${unmatchCount}, max diffpoint: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}`;
-
-			if (textMessage) {
-				return msg;
-			} else {
-				const result = `
-<div style="white-space: normal;">
-	<div style="display: inline-block;">
-		Actual:<br>
-		<img src="${util.toDataURL(actual)}">
-	</div>
-	<div style="display: inline-block;">
-		Expected:<br>
-		<img src="${util.toDataURL(expected)}">
-	</div>
-	${blurLevel > 0 ? `<div style="display: inline-block;">Actual blur:<br><img src="${util.toDataURL(blurActual)}"></div>` : ''}
-	${blurLevel > 0 ? `<div style="display: inline-block;">Expected blur:<br><img src="${util.toDataURL(blurExpected)}"></div>` : ''}
-	<div style="display: inline-block;">
-		Diff:<br>
-		<img src="${util.toDataURL(diffPx)}">
-	</div>
-	<div style="display: inline-block;">
-		Color Distance:<br>
-		<img src="${util.toDataURL(colorDistanceResultPx)}">
-	</div>
-	<div>${msg}</div>
-</div>`;
-				return toElement(result);
-			}
-		}
+		unmatchCount,
+		maxColorDistance,
+		images: {
+			diff: diffPx.data,
+			colorDistance: colorDistanceResultPx.data,
+			blurActual,
+			blurExpected,
+		},
 	};
 }
 
 module.exports = {
-	toImageMatch,
+	toMatchImage,
 };

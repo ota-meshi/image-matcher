@@ -14,14 +14,14 @@ image-matcher allows you to test Canvas and other image. image-matcher provide J
 can set a tolerance and perform comparison test.
 
 ```js
-toImageMatch(expected, {
+toMatchImage(expected, {
 	tolerance = 0, // accepts tolerance in pixels
-	delta = 0, // the maximum delta between color distance
+	delta = 0, // the maximum color distance between actual and expected
 	blurLevel = 0, // blur test level
 } = {})
 ```
 
-# html
+# CDN
 
 ```html
 <script src="https://unpkg.com/image-matcher@0.1"></script>
@@ -30,7 +30,7 @@ toImageMatch(expected, {
 # examples 
 
 * [jasmine-example](https://ota-meshi.github.io/image-matcher/examples/jasmine-example.html)  
-* [mocha-example](https://ota-meshi.github.io/image-matcher/examples/mocha-example.html)  
+* [mocha-chai-example](https://ota-meshi.github.io/image-matcher/examples/mocha-chai-example.html)  
 
 
 # Supported

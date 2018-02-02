@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>image-matcher mocha example</title>
+    <title>image-matcher mocha-chai example</title>
     <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
-    <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+    <script src="https://cdn.rawgit.com/chaijs/chai/4.1.2/chai.js"></script>
     <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
     <script src="https://unpkg.com/image-matcher"></script>
+    <script src="../../dist/image-matcher.js"></script>
     <style type="text/css">
         .block {
             display: inline-block;
@@ -41,7 +42,7 @@
     <script>
         mocha.setup('bdd');
     </script>
-    <script type="text/javascript" src="./mocha-example.js"></script>
+    <script type="text/javascript" src="./mocha-chai-example.js"></script>
     <script>
         mocha.checkLeaks();
         mocha.run();

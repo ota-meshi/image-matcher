@@ -96,14 +96,14 @@
 		}
 		const canvas = createAnswerCanvas();
 
-		it('expect(grid.canvas).toImageMatch(canvas, {delta: \'20%\', blurLevel: 1})', function() {
-			expect(grid.canvas).toImageMatch(canvas, {delta: '20%', blurLevel: 1});
+		it('expect(grid.canvas).toMatchImage(canvas, {delta: \'20%\', blurLevel: 1})', function() {
+			expect(grid.canvas).toMatchImage(canvas, {delta: '20%', blurLevel: 1});
 		});
-		it('expect(grid.canvas).toImageMatch(canvas, {delta: 0, blurLevel: 1})', function() {
-			expect(grid.canvas).toImageMatch(canvas, {delta: 0, blurLevel: 1});
+		it('expect(grid.canvas).toMatchImage(canvas, {delta: 0, blurLevel: 1})', function() {
+			expect(grid.canvas).toMatchImage(canvas, {delta: 0, blurLevel: 1});
 		});
-		it('expect(grid.canvas).toImageMatch(canvas)', function() {
-			expect(grid.canvas).toImageMatch(canvas);
+		it('expect(grid.canvas).toMatchImage(canvas)', function() {
+			expect(grid.canvas).toMatchImage(canvas);
 		});
 		it('test Color Distance', function() {
 
@@ -136,7 +136,7 @@
 			ctx.beginPath();
 			ctx.rect(0, 0, 100, 100);
 			ctx.fill();
-			expect(act).toImageMatch(exp);
+			expect(act).toMatchImage(exp);
 		});
 
 	});

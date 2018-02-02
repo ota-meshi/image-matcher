@@ -1,6 +1,6 @@
 {
   "name": "image-matcher",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "image matcher utility with Jasmine",
   "main": "dist/image-matcher.js",
   "scripts": {
@@ -27,7 +27,8 @@
   },
   "files": [
     "src/js/",
-    "dist/"
+    "dist/",
+    "docs/examples/"
   ],
   "homepage": "https://github.com/ota-meshi/image-matcher#readme",
   "devDependencies": {

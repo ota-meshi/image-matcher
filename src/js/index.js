@@ -2,38 +2,28 @@
 
 const util = require('./util');
 const matchers = require('./matchers');
+const jasmineMatchers = require('./plugins/jasmineMatchers');
+const chaiPlugin = require('./plugins/chaiPlugin');
 
-if (window.jasmine) {
-	beforeEach(() => {
-		const jm = {};
-		for (const k in matchers) {
-			const compare = matchers[k];
-			jm[k] = () => ({
-				compare,
-			});
-			
-		}
-		
-		jasmine.addMatchers(jm);
-	});
-}
-if (window.mocha && window.expect) {
-	expect.Assertion.prototype.imageMatch = function(obj, opt = {}) {
-		if (typeof opt.textMessage === 'undefined') {
-			opt.textMessage = true;
-		}
-		const res = matchers.toImageMatch(this.obj, obj, opt);
-		this.assert(
-				res.pass
-				, () => res.message()
-				, () => res.message()
-				, obj);
-		return this;
 
-	};
+if (typeof window !== 'undefined') {
+	if (window.jasmine) {
+		beforeEach(() => {
+			jasmine.addMatchers(jasmineMatchers);
+		});
+	}
+	if (window.mocha) {
+		if (window.chai) {
+			window.chai.use(chaiPlugin);
+		}
+	}
 }
 
 module.exports = {
 	util,
 	matchers,
+	plugins: {
+		jasmineMatchers,
+		chaiPlugin,
+	}
 };

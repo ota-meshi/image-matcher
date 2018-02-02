@@ -1,8 +1,10 @@
+/*global chai*/
 /*eslint-env es6*/
 /*eslint prefer-arrow-callback:"off", object-shorthand:"off"*/
 'use strict';
 window.testCode = function() {
-	describe('image-matcher mocha example', function() {
+	const expect = chai.expect;
+	describe('image-matcher mocha chai example', function() {
 		function init(canvas) {
 			const ctx = canvas.getContext('2d');
 			ctx.fillStyle = '#fff';
@@ -25,23 +27,23 @@ window.testCode = function() {
 		targetCtx.fillText('test', 30, 30);
 		const answerCanvas = init(document.querySelector('#answer'));
 		
-		it('expect(targetCanvas).to.imageMatch(answerCanvas, {tolerance: 5, delta: \'10%\', blurLevel: 1})', function() {
-			expect(targetCanvas).to.imageMatch(answerCanvas, {tolerance: 5, delta: '10%', blurLevel: 1});
+		it('expect(targetCanvas).to.matchImage(answerCanvas, {tolerance: 5, delta: \'10%\', blurLevel: 1})', function() {
+			expect(targetCanvas).to.matchImage(answerCanvas, {tolerance: 5, delta: '10%', blurLevel: 1});
 		});
-		it('expect(targetCanvas).to.imageMatch(answerCanvas, {delta: \'10%\', blurLevel: 1})', function() {
-			expect(targetCanvas).to.imageMatch(answerCanvas, {delta: '10%', blurLevel: 1});
+		it('expect(targetCanvas).to.matchImage(answerCanvas, {delta: \'10%\', blurLevel: 1})', function() {
+			expect(targetCanvas).to.matchImage(answerCanvas, {delta: '10%', blurLevel: 1});
 		});
-		it('expect(targetCanvas).to.imageMatch(answerCanvas, {delta: \'11%\', blurLevel: 1})', function() {
-			expect(targetCanvas).to.imageMatch(answerCanvas, {delta: '11%', blurLevel: 1});
+		it('expect(targetCanvas).to.matchImage(answerCanvas, {delta: \'11%\', blurLevel: 1})', function() {
+			expect(targetCanvas).to.matchImage(answerCanvas, {delta: '11%', blurLevel: 1});
 		});
-		it('expect(targetCanvas).to.imageMatch(answerCanvas, {blurLevel: 1})', function() {
-			expect(targetCanvas).to.imageMatch(answerCanvas, {blurLevel: 1});
+		it('expect(targetCanvas).to.matchImage(answerCanvas, {blurLevel: 1})', function() {
+			expect(targetCanvas).to.matchImage(answerCanvas, {blurLevel: 1});
 		});
-		it('expect(targetCanvas).to.imageMatch(answerCanvas, {delta: \'11%\'})', function() {
-			expect(targetCanvas).to.imageMatch(answerCanvas, {delta: '11%'});
+		it('expect(targetCanvas).to.matchImage(answerCanvas, {delta: \'11%\'})', function() {
+			expect(targetCanvas).to.matchImage(answerCanvas, {delta: '11%'});
 		});
-		it('expect(targetCanvas).to.imageMatch(answerCanvas)', function() {
-			expect(targetCanvas).to.imageMatch(answerCanvas);
+		it('expect(targetCanvas).to.matchImage(answerCanvas)', function() {
+			expect(targetCanvas).to.matchImage(answerCanvas);
 		});
 		it('test Color Distance', function() {
 
@@ -74,7 +76,7 @@ window.testCode = function() {
 			ctx.beginPath();
 			ctx.rect(0, 0, 100, 100);
 			ctx.fill();
-			expect(act).to.imageMatch(exp);
+			expect(act).to.matchImage(exp);
 		});
 
 	});

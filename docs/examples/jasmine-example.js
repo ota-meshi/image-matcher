@@ -26,23 +26,23 @@ window.testCode = function() {
 		targetCtx.fillText('test', 30, 30);
 		const answerCanvas = init(document.querySelector('#answer'));
 
-		it('expect(targetCanvas).toImageMatch(answerCanvas, {tolerance: 5, delta: \'10%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toImageMatch(answerCanvas, {tolerance: 5, delta: '10%', blurLevel: 1});
+		it('expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 5, delta: \'10%\', blurLevel: 1})', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 5, delta: '10%', blurLevel: 1});
 		});
-		it('expect(targetCanvas).toImageMatch(answerCanvas, {delta: \'10%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toImageMatch(answerCanvas, {delta: '10%', blurLevel: 1});
+		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'10%\', blurLevel: 1})', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '10%', blurLevel: 1});
 		});
-		it('expect(targetCanvas).toImageMatch(answerCanvas, {delta: \'11%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toImageMatch(answerCanvas, {delta: '11%', blurLevel: 1});
+		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'11%\', blurLevel: 1})', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '11%', blurLevel: 1});
 		});
-		it('expect(targetCanvas).toImageMatch(answerCanvas, {blurLevel: 1})', function() {
-			expect(targetCanvas).toImageMatch(answerCanvas, {blurLevel: 1});
+		it('expect(targetCanvas).toMatchImage(answerCanvas, {blurLevel: 1})', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {blurLevel: 1});
 		});
-		it('expect(targetCanvas).toImageMatch(answerCanvas, {delta: \'11%\'})', function() {
-			expect(targetCanvas).toImageMatch(answerCanvas, {delta: '11%'});
+		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'11%\'})', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '11%'});
 		});
-		it('expect(targetCanvas).toImageMatch(answerCanvas)', function() {
-			expect(targetCanvas).toImageMatch(answerCanvas);
+		it('expect(targetCanvas).toMatchImage(answerCanvas)', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas);
 		});
 		it('test Color Distance', function() {
 
@@ -75,7 +75,7 @@ window.testCode = function() {
 			ctx.beginPath();
 			ctx.rect(0, 0, 100, 100);
 			ctx.fill();
-			expect(act).toImageMatch(exp);
+			expect(act).toMatchImage(exp);
 		});
 
 	});

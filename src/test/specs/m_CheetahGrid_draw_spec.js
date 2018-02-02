@@ -1,8 +1,9 @@
-/*global cheetahGrid*/
+/*global cheetahGrid,chai*/
 /*eslint-env es6*/
 /*eslint prefer-arrow-callback:"off", object-shorthand:"off"*/
 'use strict';
 (function() {
+	const expect = chai.expect;
 	let mainEl = document.querySelector('#main');
 	if (!mainEl) {
 		mainEl = document.createElement('div');
@@ -96,14 +97,14 @@
 		}
 		const canvas = createAnswerCanvas();
 
-		it('expect(grid.canvas).to.imageMatch(canvas, {delta: \'20%\', blurLevel: 1})', function() {
-			expect(grid.canvas).to.imageMatch(canvas, {delta: '20%', blurLevel: 1});
+		it('expect(grid.canvas).to.matchImage(canvas, {delta: \'20%\', blurLevel: 1})', function() {
+			expect(grid.canvas).to.matchImage(canvas, {delta: '20%', blurLevel: 1});
 		});
-		it('expect(grid.canvas).to.imageMatch(canvas, {delta: 0, blurLevel: 1})', function() {
-			expect(grid.canvas).to.imageMatch(canvas, {delta: 0, blurLevel: 1});
+		it('expect(grid.canvas).to.matchImage(canvas, {delta: 0, blurLevel: 1})', function() {
+			expect(grid.canvas).to.matchImage(canvas, {delta: 0, blurLevel: 1});
 		});
-		it('expect(grid.canvas).to.imageMatch(canvas)', function() {
-			expect(grid.canvas).to.imageMatch(canvas);
+		it('expect(grid.canvas).to.matchImage(canvas)', function() {
+			expect(grid.canvas).to.matchImage(canvas);
 		});
 		it('test Color Distance', function() {
 
@@ -136,7 +137,7 @@
 			ctx.beginPath();
 			ctx.rect(0, 0, 100, 100);
 			ctx.fill();
-			expect(act).to.imageMatch(exp);
+			expect(act).to.matchImage(exp);
 		});
 
 	});
