@@ -14,45 +14,6 @@ function createCanvasSet() {
 
 const SINGLETON = createCanvasSet();
 
-
-function getSize(object) {
-	function getCanvasSize(canvas) {
-		try {
-			const HTMLCanvasElement = self.HTMLCanvasElement || self.Canvas;
-			return {
-				width: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'width') - 0,
-				height: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'height') - 0,
-			};
-		} catch (e) {
-			//noop
-		}
-		try {
-			return {
-				width: canvas.getAttribute('width') - 0,
-				height: canvas.getAttribute('height') - 0,
-			};
-		} catch (e) {
-			//noop
-		}
-		const {width, height} = object;
-		return {width, height};
-	}
-	if (isCanvas(object)) {
-		return getCanvasSize(object);
-	} else if (isContext(object)) {
-		return getCanvasSize(object.canvas);
-	}
-	const {width, height} = object;
-	return {width, height};
-}
-function getImageData(context, ...args) {
-	try {
-		return CanvasRenderingContext2D.prototype.getImageData.apply(context, args);
-	} catch (e) {
-		return context.getImageData(...args);
-	}
-}
-
 function isImage(object) {
 	return isType(object, TYPE_IMAGE);
 }
@@ -117,6 +78,44 @@ function toCanvas(object) {
 
 
 ////
+
+function getSize(object) {
+	function getCanvasSize(canvas) {
+		try {
+			const HTMLCanvasElement = self.HTMLCanvasElement || self.Canvas;
+			return {
+				width: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'width') - 0,
+				height: HTMLCanvasElement.prototype.getAttribute.call(canvas, 'height') - 0,
+			};
+		} catch (e) {
+			//noop
+		}
+		try {
+			return {
+				width: canvas.getAttribute('width') - 0,
+				height: canvas.getAttribute('height') - 0,
+			};
+		} catch (e) {
+			//noop
+		}
+		const {width, height} = object;
+		return {width, height};
+	}
+	if (isCanvas(object)) {
+		return getCanvasSize(object);
+	} else if (isContext(object)) {
+		return getCanvasSize(object.canvas);
+	}
+	const {width, height} = object;
+	return {width, height};
+}
+function getImageData(context, ...args) {
+	try {
+		return CanvasRenderingContext2D.prototype.getImageData.apply(context, args);
+	} catch (e) {
+		return context.getImageData(...args);
+	}
+}
 
 
 class Pixels {
@@ -304,7 +303,6 @@ module.exports = {
 	blur,
 	toColorDistanceBox,
 	fit: fitImageData,
-
 
 	// classes
 	Pixels,
