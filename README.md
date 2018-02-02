@@ -16,8 +16,8 @@ can set a tolerance and perform comparison test.
 ```js
 toImageMatch(expected, {
 	tolerance = 0, // accepts tolerance in pixels
-	delta = 0, // the maximum delta between
-	blurLevel = 0, // blur test lebel
+	delta = 0, // the maximum delta between color distance
+	blurLevel = 0, // blur test level
 } = {})
 ```
 
