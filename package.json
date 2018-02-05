@@ -4,9 +4,10 @@
   "description": "image matcher utility with Jasmine",
   "main": "dist/image-matcher.js",
   "scripts": {
-    "test": "npm run lint",
+    "test": "karma start --no-auto-watch --single-run --browsers ChromeHeadless",
     "build": "npm run format && webpack",
     "watch": "webpack --watch",
+    "watch:test": "karma start",
     "lint": "eslint src/js",
     "format": "eslint src --fix",
     "prepublishOnly": "npm run build"
@@ -38,6 +39,16 @@
     "eslint": "^4.16.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-html": "^4.0.2",
+    "jasmine": "^2.9.0",
+    "karma": "^2.0.0",
+    "karma-babel-preprocessor": "^7.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.1",
+    "karma-htmlfile-reporter": "^0.3.5",
+    "karma-jasmine": "^1.1.1",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-remap-istanbul": "^0.6.0",
     "webpack": "^3.10.0",
     "webpack-livereload-plugin": "^1.0.0"
   }
