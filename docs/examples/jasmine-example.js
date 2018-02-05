@@ -27,22 +27,22 @@ window.testCode = function() {
 		const answerCanvas = init(document.querySelector('#answer'));
 
 		it('expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 5, delta: \'10%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 5, delta: '10%', blurLevel: 1});
+			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 5, delta: '10%', blurLevel: 1, log: true});
 		});
 		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'10%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '10%', blurLevel: 1});
+			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '10%', blurLevel: 1, log: true});
 		});
 		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'11%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '11%', blurLevel: 1});
+			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '11%', blurLevel: 1, log: true});
 		});
 		it('expect(targetCanvas).toMatchImage(answerCanvas, {blurLevel: 1})', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {blurLevel: 1});
+			expect(targetCanvas).toMatchImage(answerCanvas, {blurLevel: 1, log: true});
 		});
 		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'11%\'})', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '11%'});
+			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '11%', log: true});
 		});
 		it('expect(targetCanvas).toMatchImage(answerCanvas)', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas);
+			expect(targetCanvas).toMatchImage(answerCanvas, {log: true});
 		});
 		it('test Color Distance', function() {
 
@@ -75,7 +75,7 @@ window.testCode = function() {
 			ctx.beginPath();
 			ctx.rect(0, 0, 100, 100);
 			ctx.fill();
-			expect(act).toMatchImage(exp);
+			expect(act).toMatchImage(exp, {log: true});
 		});
 
 	});

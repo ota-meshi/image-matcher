@@ -14,7 +14,8 @@ function toMatchImage(actual, expected, {
 	delta = 0, // the maximum color distance between actual and expected
 	blurLevel = 0, // blur test level
 	fitSize = true,
-	textMessage = false
+	textMessage = false,
+	log
 } = {}) {
 	const {
 		pass,
@@ -33,10 +34,21 @@ function toMatchImage(actual, expected, {
 		fitSize,
 	});
 
+	if (!pass && log) {
+		util.logImage(
+				'Actual:', actual,
+				'/Expected:', expected,
+				...(blurLevel > 0 ? ['/Actual blur:', blurActual] : []),
+				...(blurLevel > 0 ? ['/Expected blur:', blurExpected] : []),
+				'/Diff:', diff,
+				'/Color Distance:', colorDistance
+		);
+	}
+
 	return {
 		pass,
 		message() {
-			const msg = `unmatch pixels: ${unmatchCount}, max diffpoint: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}`;
+			const msg = `unmatch pixels: ${unmatchCount}, max color distance: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}`;
 
 			if (textMessage) {
 				return msg;

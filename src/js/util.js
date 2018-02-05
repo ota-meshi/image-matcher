@@ -42,6 +42,14 @@ function toImageData(object) {
 	if (isImageData(object)) { return object; }
 	return undefined;
 }
+function canImageDataConvert(object) {
+	if (object instanceof Pixels) { return true; }
+	if (isImage(object)) { return true; }
+	if (isCanvas(object)) { return true; }
+	if (isContext(object)) { return true; }
+	if (isImageData(object)) { return true; }
+	return false;
+}
 function toImageDataFromImage(image) {
 	const {height, width} = getSize(image);
 	const {canvas, context} = SINGLETON;
@@ -49,12 +57,12 @@ function toImageDataFromImage(image) {
 	canvas.height = height;
 	context.clearRect(0, 0, width, height);
 	context.drawImage(image, 0, 0);
-	return getImageData(context, 0, 0, width, height);
+	return getImageDataFromContext(context, 0, 0, width, height);
 }
 function toImageDataFromCanvas(canvas) {
 	const {height, width} = getSize(canvas);
 	const context = canvas.getContext('2d');
-	return getImageData(context, 0, 0, width, height);
+	return getImageDataFromContext(context, 0, 0, width, height);
 }
 function toImageDataFromContext(context) {
 	return toImageDataFromCanvas(context.canvas);
@@ -109,7 +117,7 @@ function getSize(object) {
 	const {width, height} = object;
 	return {width, height};
 }
-function getImageData(context, ...args) {
+function getImageDataFromContext(context, ...args) {
 	try {
 		return CanvasRenderingContext2D.prototype.getImageData.apply(context, args);
 	} catch (e) {
@@ -286,6 +294,55 @@ function toDataURL(object) {
 	return 'data:image/png;base64,' + base64.replace(/^.*,/, '');
 }
 
+const ua = navigator.userAgent.toLowerCase();
+const isChrome = (ua.indexOf('chrome') > -1) && (ua.indexOf('edge') === -1);
+
+function getImageData(object, sx, sy, sw, sh) {
+	if (isCanvas(object)) {
+		return getImageDataFromContext(object.getContext('2d'), sx, sy, sw, sh);
+	} else if (isContext(object)) {
+		return getImageDataFromContext(object, sx, sy, sw, sh);
+	} else {
+		const canvas = toCanvas(object);
+		return getImageDataFromContext(canvas, sx, sy, sw, sh);
+	}
+}
+
+function logImage(...args) {
+	console.log(...getLogArgs(...args));
+}
+
+function getLogArgs(...args) {
+	const logArgs = [];
+	let format = '';
+	
+	args.forEach((arg) => {
+		if (canImageDataConvert(arg)) {
+			const dataurl = toDataURL(arg);
+			if (isChrome) {
+				const {height, width} = getSize(arg);
+				const style = `font-size: 1px; line-height: ${height}px; padding: ${height * 0.5}px ${width * 0.5}px; background-size: ${width}px ${height}px; background: url(${dataurl}) no-repeat;`;
+				logArgs.push(style);
+				logArgs.push('');
+				format += '%c%c';
+			} else {
+				logArgs.push(dataurl);
+				format += '%o';
+			}
+		} else if (typeof arg === 'string') {
+			logArgs.push(arg);
+			format += '%s';
+		} else if (typeof arg === 'number') {
+			logArgs.push(arg);
+			format += '%o';
+		} else {
+			logArgs.push(arg);
+			format += '%o';
+		}
+	});
+	return [format, ...logArgs];
+}
+
 module.exports = {
 	// utilitys
 	createImageData,
@@ -297,6 +354,9 @@ module.exports = {
 	toCanvas,
 	toDataURL,
 	getSize,
+	logImage,
+	getLogArgs,
+	getImageData,
 
 	// process
 	diff: diffImageData,
