@@ -36,6 +36,7 @@ function toMatchImage(actual, expected, {
 
 	if (!pass && log) {
 		util.logImage(
+				`unmatch pixels: ${unmatchCount}, max color distance: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}\n`,
 				'Actual:', actual,
 				'/Expected:', expected,
 				...(blurLevel > 0 ? ['/Actual blur:', blurActual] : []),
