@@ -46,8 +46,8 @@ window.testCode = function() {
 		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'10%\', blurLevel: 1})', function() {
 			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '10%', blurLevel: 1, log: true});
 		});
-		it('expect(targetCanvas).not.toMatchImage(answerCanvas, {delta: \'5%\', blurLevel: 1})', function() {
-			expect(targetCanvas).not.toMatchImage(answerCanvas, {delta: '5%', blurLevel: 1, log: true});
+		it('expect(targetCanvas).not.toMatchImage(answerCanvas, {delta: \'3%\', blurLevel: 1})', function() {
+			expect(targetCanvas).not.toMatchImage(answerCanvas, {delta: '3%', blurLevel: 1, log: true});
 		});
 		it('expect(targetCanvas).not.toMatchImage(answerCanvas)', function() {
 			expect(targetCanvas).not.toMatchImage(answerCanvas, {log: true});

@@ -50,30 +50,30 @@ function toMatchImage(actual, expected, {
 		fitSize,
 	});
 
-	if (log) {
-		let title = 'unknown';
-		try {
-			title = getCurTitle();
-		} catch (e) {
-			//noop
-		}
-
-		util.logImage(
-				`${title}\n`,
-				`unmatch pixels: ${unmatchCount}, max color distance: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}\n`,
-				'Actual:', actual,
-				'/Expected:', expected,
-				...(blurLevel > 0 ? ['/Actual blur:', blurActual] : []),
-				...(blurLevel > 0 ? ['/Expected blur:', blurExpected] : []),
-				'/Diff:', diff,
-				'/Color Distance:', colorDistance
-		);
-	}
 
 	return {
 		pass,
 		message() {
 			const msg = `unmatch pixels: ${unmatchCount}, max color distance: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}`;
+
+			if (log) {
+				let title = 'unknown';
+				try {
+					title = getCurTitle();
+				} catch (e) {
+					//noop
+				}
+
+				util.logImage(
+						`${title}\n${msg}\n`,
+						'Actual:', actual,
+						'/Expected:', expected,
+						...(blurLevel > 0 ? ['/Actual blur:', blurActual] : []),
+						...(blurLevel > 0 ? ['/Expected blur:', blurExpected] : []),
+						'/Diff:', diff,
+						'/Color Distance:', colorDistance
+				);
+			}
 
 			if (textMessage) {
 				return msg;
