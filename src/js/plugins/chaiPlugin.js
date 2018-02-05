@@ -45,7 +45,7 @@ function toMatchImage(actual, expected, {
 		fitSize,
 	});
 
-	if (!pass && log) {
+	if (log) {
 
 		let title = 'unknown';
 		try {

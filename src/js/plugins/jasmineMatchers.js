@@ -1,7 +1,23 @@
+/*global jasmine*/
 'use strict';
 
 const matchers = require('../matchers');
 const util = require('../util');
+
+function getCurTitle(suites) {
+	return reporterCurrentSpec.name;
+}
+
+const reporterCurrentSpec = {
+	name: 'unknown',
+	specStarted(result) {
+		this.name = result.fullName;
+	}
+};
+
+if (typeof jasmine !== 'undefined') {
+	jasmine.getEnv().addReporter(reporterCurrentSpec);
+}
 
 function toElement(html) {
 	const e = document.createElement('div');
@@ -34,8 +50,16 @@ function toMatchImage(actual, expected, {
 		fitSize,
 	});
 
-	if (!pass && log) {
+	if (log) {
+		let title = 'unknown';
+		try {
+			title = getCurTitle();
+		} catch (e) {
+			//noop
+		}
+
 		util.logImage(
+				`${title}\n`,
 				`unmatch pixels: ${unmatchCount}, max color distance: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}\n`,
 				'Actual:', actual,
 				'/Expected:', expected,
