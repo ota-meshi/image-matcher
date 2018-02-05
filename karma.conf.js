@@ -112,6 +112,11 @@ module.exports = function(config) {
 				base: 'IE',
 				flags: ['-extoff']
 			},
+
+			'Chrome_travis_ci': {
+				base: 'ChromeHeadless',
+				flags: ['--no-sandbox']
+			}
 		},
 
 		// Continuous Integration mode

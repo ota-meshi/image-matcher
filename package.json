@@ -4,7 +4,7 @@
   "description": "image matcher utility with Jasmine",
   "main": "dist/image-matcher.js",
   "scripts": {
-    "test": "karma start --no-auto-watch --single-run --browsers ChromeHeadless",
+    "test": "karma start --no-auto-watch --single-run --browsers Chrome_travis_ci",
     "build": "npm run format && webpack",
     "watch": "webpack --watch",
     "watch:test": "karma start",
