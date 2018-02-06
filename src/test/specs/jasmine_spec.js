@@ -41,7 +41,11 @@ window.testCode = function() {
 		const answerCanvas = init(find('#answer', '<canvas width="100" height="100"></canvas>'));
 
 		it('tolerance, delta', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 8, delta: '5%', blurLevel: 1, log: true});
+			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 8,
+				delta: '5%',
+				blurLevel: 1,
+				log: true,
+				os: {win: {tolerance: 9}}});
 		});
 		it('tolerance', function() {
 			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 350, blurLevel: 1, log: true});

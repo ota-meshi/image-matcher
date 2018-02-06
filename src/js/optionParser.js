@@ -14,7 +14,7 @@ function merge(a, ...args) {
 		for (const k in a) {
 			const v = arg[k];
 			if (typeof v !== 'undefined') {
-				ret[k] = v[k];
+				ret[k] = v;
 			}
 		}
 	});
