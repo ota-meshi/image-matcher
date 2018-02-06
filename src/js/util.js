@@ -1,5 +1,7 @@
 'use strict';
 
+
+const browser = require('./browser');
 // I referred to https://www.npmjs.com/package/imagediff
 const TYPE_CANVAS = /\[object (Canvas|HTMLCanvasElement)\]/i;
 const TYPE_CONTEXT = /\[object CanvasRenderingContext2D\]/i;
@@ -294,9 +296,6 @@ function toDataURL(object) {
 	return 'data:image/png;base64,' + base64.replace(/^.*,/, '');
 }
 
-const ua = navigator.userAgent.toLowerCase();
-const isChrome = (ua.indexOf('chrome') > -1) && (ua.indexOf('edge') === -1);
-
 function getImageData(object, sx, sy, sw, sh) {
 	if (isCanvas(object)) {
 		return getImageDataFromContext(object.getContext('2d'), sx, sy, sw, sh);
@@ -319,7 +318,7 @@ function getLogArgs(...args) {
 	args.forEach((arg) => {
 		if (canImageDataConvert(arg)) {
 			const dataurl = toDataURL(arg);
-			if (isChrome) {
+			if (browser.isChrome) {
 				const {height, width} = getSize(arg);
 				const style = `font-size: 1px; line-height: ${height}px; padding: ${height * 0.5}px ${width * 0.5}px; background-size: ${width}px ${height}px; background: url(${dataurl}) no-repeat;`;
 				logArgs.push(style);

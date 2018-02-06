@@ -40,17 +40,20 @@ window.testCode = function() {
 		targetCtx.fillText('test', 30, 30);
 		const answerCanvas = init(find('#answer', '<canvas width="100" height="100"></canvas>'));
 
-		it('expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 10, delta: \'5%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 10, delta: '5%', blurLevel: 1, log: true});
+		it('tolerance, delta', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 8, delta: '5%', blurLevel: 1, log: true});
 		});
-		it('expect(targetCanvas).toMatchImage(answerCanvas, {delta: \'10%\', blurLevel: 1})', function() {
-			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '10%', blurLevel: 1, log: true});
+		it('tolerance', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {tolerance: 350, blurLevel: 1, log: true});
 		});
-		it('expect(targetCanvas).not.toMatchImage(answerCanvas, {delta: \'3%\', blurLevel: 1})', function() {
-			expect(targetCanvas).not.toMatchImage(answerCanvas, {delta: '3%', blurLevel: 1, log: true});
+		it('delta', function() {
+			expect(targetCanvas).toMatchImage(answerCanvas, {delta: '6%', blurLevel: 1, log: true});
 		});
-		it('expect(targetCanvas).not.toMatchImage(answerCanvas)', function() {
+		it('not match', function() {
 			expect(targetCanvas).not.toMatchImage(answerCanvas, {log: true});
+		});
+		it('not match delta', function() {
+			expect(targetCanvas).not.toMatchImage(answerCanvas, {delta: '3%', blurLevel: 1, log: true});
 		});
 
 	});
