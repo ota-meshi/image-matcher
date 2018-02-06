@@ -11,7 +11,8 @@
     "lint": "eslint src/js",
     "format": "eslint src --fix",
     "prepublishOnly": "npm run build",
-    "postversion": "git push origin $(git describe --abbrev=0 --tags)"
+    "postversion": "git push origin $(git describe --abbrev=0 --tags)",
+    "patch": "npm version patch"
   },
   "repository": {
     "type": "git",
