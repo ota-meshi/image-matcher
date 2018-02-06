@@ -2,7 +2,8 @@
 'use strict';
 
 const matchers = require('../matchers');
-const util = require('../util');
+const MessageBuilder = require('../MessageBuilder');
+const optionParser = require('../optionParser');
 
 
 function getCurTitle(suites) {
@@ -24,52 +25,31 @@ function getCurTitle(suites) {
 function toMatchImage(actual, expected, {
 	tolerance = 0, // accepts tolerance in pixels
 	delta = 0, // the maximum color distance between actual and expected
-	blurLevel = 0, // blur test level
+	blurLevel = 0, // test blur level
 	fitSize = true,
 	log,
 } = {}) {
-	const {
-		pass,
-		unmatchCount,
-		maxColorDistance,
-		images: {
-			diff,
-			colorDistance,
-			blurActual,
-			blurExpected,
-		},
-	} = matchers.toMatchImage(actual, expected, {
+	const result = matchers.toMatchImage(actual, expected, {
 		tolerance,
 		delta,
 		blurLevel,
 		fitSize,
 	});
 
+	const msg = new MessageBuilder(result, actual, expected, {
+		tolerance,
+		delta,
+		blurLevel,
+		fitSize,
+	});
 
 	return {
-		pass,
+		pass: msg.pass,
 		message() {
-			const msg = `unmatch pixels: ${unmatchCount}, max color distance: ${maxColorDistance}, {tolerance: ${tolerance}, delta: ${delta}, blurLevel: ${blurLevel}}`;
 			if (log) {
-
-				let title = 'unknown';
-				try {
-					title = getCurTitle(mocha.suite.suites);
-				} catch (e) {
-					//noop
-				}
-
-				util.logImage(
-						`${title}\n${msg}\n`,
-						'Actual:', actual,
-						'/Expected:', expected,
-						...(blurLevel > 0 ? ['/Actual blur:', blurActual] : []),
-						...(blurLevel > 0 ? ['/Expected blur:', blurExpected] : []),
-						'/Diff:', diff,
-						'/Color Distance:', colorDistance
-				);
+				msg.log(() => getCurTitle(mocha.suite.suites));
 			}
-			return msg;
+			return msg.message;
 		},
 	};
 }
@@ -83,16 +63,19 @@ module.exports = function(chai, utils) {
 		blurLevel = flag(this, 'blurLevel'),
 		fitSize = flag(this, 'fitSize'),
 		log,
+		browser,
+		os,
 	}) {
 		const actual = flag(this, 'object');
-
-		const {pass, message} = toMatchImage(actual, expected, {
+		const opt = optionParser({
 			tolerance,
 			delta,
 			blurLevel,
 			fitSize,
-			log
-		});
+		}, browser, os);
+		opt.log = log;
+
+		const {pass, message} = toMatchImage(actual, expected, opt);
 		this.assert(
 				pass
 				, message

@@ -5,7 +5,7 @@ const util = require('./util');
 function toMatchImage(actual, expected, {
 	tolerance = 0, // accepts tolerance in pixels
 	delta = 0, // the maximum color distance between actual and expected
-	blurLevel = 0, // blur test level
+	blurLevel = 0, // test blur level
 	fitSize = true,
 } = {}) {
 	if (typeof delta === 'string' && /^[+-]?\d+\.?\d*%$/.test(delta)) {
