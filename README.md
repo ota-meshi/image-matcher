@@ -11,7 +11,7 @@
 
 # Unit Testing
 
-image-matcher allows you to test Canvas and other image. image-matcher provide Jasmine matchers.  
+image-matcher allows you to test Canvas and other image. It will provide Jasmine matcher for that.　 
 can set a tolerance and perform comparison test.
 
 ```js
