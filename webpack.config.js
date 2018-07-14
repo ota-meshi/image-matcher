@@ -38,18 +38,9 @@ module.exports = [{
 	resolve: {
 		extensions: ['.js'],
 	},
-
+	mode: watchMode ? 'development' : 'production',
 	module: {
-		loaders: [
-			{
-				enforce: 'pre',
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loader: 'eslint-loader',
-				options: {
-					fix: true,
-				}
-			},
+		rules: [
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
@@ -62,7 +53,6 @@ module.exports = [{
 	},
 	plugins: [
 		...(watchMode ? [] : [
-			new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
 			new webpack.optimize.AggressiveMergingPlugin(),
 			new webpack.optimize.ModuleConcatenationPlugin(),
 			new webpack.optimize.OccurrenceOrderPlugin(),
