@@ -36,7 +36,7 @@ module.exports = function(config) {
 		//karma-babel-preprocessor
 		babelPreprocessor: {
 			options: {
-				presets: ['es2015'],
+				presets: ['@babel/preset-env'],
 				sourceMap: 'inline'
 			},
 			filename(file) {
