@@ -35,7 +35,7 @@
   ],
   "homepage": "https://github.com/ota-meshi/image-matcher#readme",
   "devDependencies": {
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.8.0",
     "@babel/preset-env": "^7.1.0",
     "babel-loader": "^8.0.2",
     "eslint": "^5.1.0",
