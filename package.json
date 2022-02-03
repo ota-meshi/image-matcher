@@ -46,7 +46,7 @@
     "karma-chrome-launcher": "^3.0.0",
     "karma-coverage": "^2.0.0",
     "karma-htmlfile-reporter": "^0.3.8",
-    "karma-jasmine": "^1.1.1",
+    "karma-jasmine": "^4.0.0",
     "karma-junit-reporter": "^1.2.0",
     "karma-mocha-reporter": "^2.2.5",
     "karma-remap-istanbul": "^0.6.0",
