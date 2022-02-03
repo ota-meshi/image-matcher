@@ -44,6 +44,7 @@ function toMatchImage(actual, expected, {
 	});
 
 	return {
+		result,
 		pass: msg.pass,
 		message() {
 			if (log) {
@@ -55,7 +56,7 @@ function toMatchImage(actual, expected, {
 }
 
 
-module.exports = function(chai, utils) {
+function chaiPlugin(chai, utils, options) {
 	const flag = utils.flag;
 	chai.Assertion.addMethod('matchImage', function(expected, {
 		tolerance = flag(this, 'tolerance'),
@@ -75,7 +76,10 @@ module.exports = function(chai, utils) {
 		}, browser, os);
 		opt.log = log;
 
-		const {pass, message} = toMatchImage(actual, expected, opt);
+		const {pass, message, result} = toMatchImage(actual, expected, opt);
+		if (!pass && options && typeof options.onError === 'function') {
+			options.onError(result, {actual, expected});
+		}
 		this.assert(
 				pass
 				, message
@@ -95,6 +99,12 @@ module.exports = function(chai, utils) {
 	chai.Assertion.addProperty('fitTheSize', function() {
 		flag(this, 'fitSize', true);
 	});
+}
 
-
+chaiPlugin.withOption = function(options) {
+	return function(chai, utils) {
+		return chaiPlugin(chai, utils, options);
+	};
 };
+
+module.exports = chaiPlugin;
