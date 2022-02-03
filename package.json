@@ -1,6 +1,6 @@
 {
   "name": "image-matcher",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "image matcher utility with Jasmine",
   "main": "dist/image-matcher.js",
   "scripts": {
