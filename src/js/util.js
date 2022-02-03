@@ -27,13 +27,26 @@ function isContext(object) {
 }
 function isImageData(object) {
 	return !!(object &&
-      isType(object, TYPE_IMAGE_DATA) &&
+		isType(object, TYPE_IMAGE_DATA) &&
       typeof object.width !== 'undefined' &&
       typeof object.height !== 'undefined' &&
       typeof object.data !== 'undefined');
 }
 function isType(object, type) {
-	return typeof object === 'object' && !!Object.prototype.toString.apply(object).match(type);
+	if (typeof object !== 'object') {
+		return false;
+	}
+	const str = Object.prototype.toString.apply(object);
+	if (str.match(type)) {
+		return true;
+	}
+	if (str === '[object Object]') {
+		const strForMock = '[object ' + (object.constructor && object.constructor.name) + ']';
+		if (strForMock.match(type)) {
+			return true;
+		}
+	}
+	return false;
 }
   
 function toImageData(object) {
